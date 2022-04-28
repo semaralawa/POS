@@ -8,3 +8,4 @@ a simple server to handle POS
 4. make sure you have run a mysql server (database config can be found at `sql` folder)
 5. run the server by typing `npm start`
 6. open your localhost in the browser
+7. login using username `admin` and password `admin`
