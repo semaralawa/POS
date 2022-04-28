@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 
 //login page handler
 app.get('/login', function (req, res) {
-    res.render(path.join(__dirname, 'public/login.ejs'));
+    res.render(path.join(__dirname, 'public/sign-in.ejs'));
 });
 
 app.post('/login', function (req, res) {
@@ -34,7 +34,7 @@ app.post('/login', function (req, res) {
         (error, results) => {
             if (results.length > 0) {
                 if (req.body.password === results[0].password) {
-                    res.redirect('/home');
+                    res.redirect('/billing');
                 } else {
                     console.log("wrong password");
                     res.redirect('/');
@@ -57,7 +57,7 @@ app.get('/data', function (req, res) {
     connection.query(
         'SELECT * FROM barang',
         (error, results) => {
-            res.render(path.join(__dirname, 'public/list.ejs'), { items: results });
+            res.render(path.join(__dirname, 'public/tables.ejs'), { items: results });
         }
     );
 });
@@ -111,6 +111,52 @@ app.get('/delete-data/:id', function (req, res) {
         }
     );
     res.redirect('/data');
+});
+
+//billing handler
+app.get('/billing', function (req, res) {
+    var tot_pesanan;
+    connection.query(
+        'SELECT * FROM pesanan',
+        (error, results) => {
+            tot_pesanan = results;
+        }
+    );
+    connection.query(
+        'SELECT * FROM barang',
+        (error, results) => {
+            res.render(path.join(__dirname, 'public/billing.ejs'), { items: results, orders: tot_pesanan });
+        }
+    );
+});
+
+app.post('/billing-add', function (req, res) {
+    var data = req.body;
+    var sql = "INSERT INTO pesanan SET ?";
+    connection.query(sql, [data],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('add to pesanan successfull');
+        }
+    );
+    connection.query('UPDATE pesanan SET total=? WHERE nama_brg= ?', [data.qty * data.harga, data.nama_brg],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('add to pesanan successfull');
+        }
+    );
+    res.redirect('/billing');
+});
+
+app.get('/billing-delete/:name', function (req, res) {
+    var sql = "DELETE FROM pesanan WHERE nama_brg=?";
+    connection.query(sql, [req.params.name],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('delete successfull');
+        }
+    );
+    res.redirect('/billing');
 });
 
 app.listen(80, '0.0.0.0');
