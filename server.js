@@ -34,7 +34,7 @@ app.post('/login', function (req, res) {
         (error, results) => {
             if (results.length > 0) {
                 if (req.body.password === results[0].password) {
-                    res.redirect('/show-data');
+                    res.redirect('/home');
                 } else {
                     console.log("wrong password");
                     res.redirect('/');
@@ -47,14 +47,70 @@ app.post('/login', function (req, res) {
     );
 });
 
+//homepage
+app.get('/home', function (req, res) {
+    res.render(path.join(__dirname, 'public/home.ejs'));
+});
+
 //show data on database
-app.get('/show-data', function (req, res) {
+app.get('/data', function (req, res) {
     connection.query(
-        'SELECT * FROM mahasiswa',
+        'SELECT * FROM barang',
         (error, results) => {
-            res.render(path.join(__dirname, 'public/list.ejs'), { students: results });
+            res.render(path.join(__dirname, 'public/list.ejs'), { items: results });
         }
     );
+});
+
+//add data handler
+app.get('/add-data', function (req, res) {
+    res.render(path.join(__dirname, 'public/add-data.ejs'));
+});
+
+app.post('/add-data', function (req, res) {
+    var data = req.body;
+    var sql = "INSERT INTO barang SET ?";
+    connection.query(sql, [data],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('update successfull');
+            res.redirect('/data');
+        }
+    );
+});
+
+//edit data handler
+app.get('/edit-data/:id', function (req, res) {
+    connection.query(
+        'SELECT * FROM barang WHERE id_brg=?', [req.params.id],
+        (error, results) => {
+            res.render(path.join(__dirname, 'public/edit-data.ejs'), { barangs: results });
+        }
+    );
+});
+
+app.post('/edit-data/:id', function (req, res) {
+    var data = req.body;
+    var sql = "UPDATE barang SET ? WHERE id_brg= ?";
+    connection.query(sql, [data, req.params.id],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('update successfull');
+        }
+    );
+    res.redirect('/data');
+});
+
+//delete data handler
+app.get('/delete-data/:id', function (req, res) {
+    var sql = "DELETE FROM barang WHERE id_brg=?";
+    connection.query(sql, [req.params.id],
+        (error, results) => {
+            if (error) throw (error);
+            console.log('delete successfull');
+        }
+    );
+    res.redirect('/data');
 });
 
 app.listen(80, '0.0.0.0');

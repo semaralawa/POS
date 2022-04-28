@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Data</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>MENAMBAH DATA BARU</h1>
+    <hr>
+    <div class="add-form">
+        <form action="/add-data" method="post">
+            <p>Nama Barang</p>
+            <input type="text" name="nama_brg" id="nama_brg">
+            <p>Jenis</p>
+            <input type="text" name="jenis" id="jenis">
+            <p>gambar (opsional)</p>
+            <input type="file" name="gambar" id="gambar">
+            <p>harga</p>
+            <input type="text" name="harga" id="harga">
+            <p>stok saat ini</p>
+            <input type="text" name="stock" id="stock">
+            <p></p>
+            <input type="submit" value="tambah barang">
+        </form>
+    </div>
+</body>
+
+</html>

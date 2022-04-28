@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Data</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>EDIT DATA</h1>
+    <hr>
+    <% barangs.forEach((barang)=> { %>
+        <div class="add-form">
+            <form action="/edit-data/<%= barang.id_brg %>" method="post">
+                <p>Nama Barang</p>
+                <input type="text" name="nama_brg" id="nama_brg" value="<%= barang.nama_brg %>">
+                <p>Jenis</p>
+                <input type="text" name="jenis" id="jenis" value="<%= barang.jenis %>">
+                <p>gambar (opsional)</p>
+                <input type="file" name="gambar" id="gambar" value="<%= barang.gambar %>">
+                <p>harga</p>
+                <input type="text" name="harga" id="harga" value="<%= barang.harga %>">
+                <p>stok saat ini</p>
+                <input type="text" name="stock" id="stock" value="<%= barang.stock %>">
+                <p></p>
+                <input type="submit" value="edit data barang">
+            </form>
+        </div>
+        <% }) %>
+</body>
+
+</html>

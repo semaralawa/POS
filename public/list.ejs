@@ -5,17 +5,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>list siswa</title>
+    <title>database</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            /* text-align: left; */
+            width: 600px;
+            margin: auto;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        .add {
+            /* border: 1px black solid; */
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <% students.forEach((student)=> { %>
-        <p>
-            <%= student.NIM %>
-                <%=student.Nama%>
-        </p>
-        <!-- <br> -->
-        <% }) %>
+    <h1>DATABASE BARANG</h1>
+    <hr>
+    <table>
+        <tr>
+            <th>Pilihan</th>
+            <th>id barang</th>
+            <th>nama barang</th>
+            <th>jenis</th>
+            <th>gambar</th>
+            <th>harga (Rp)</th>
+            <th>stok</th>
+        </tr>
+        <% items.forEach((item)=> { %>
+            <tr>
+                <td><a href="/edit-data/<%= item.id_brg %>">edit</a> <a href="/delete-data/<%= item.id_brg %>">
+                        hapus</a></td>
+                <td>
+                    <%= item.id_brg %>
+                </td>
+                <td>
+                    <%= item.nama_brg %>
+                </td>
+                <td>
+                    <%= item.jenis %>
+                </td>
+                <td>
+                    <%= item.gambar %>
+                </td>
+                <td>
+                    <%= item.harga %>
+                </td>
+                <td>
+                    <%= item.stock %>
+                </td>
+
+            </tr>
+            <% }) %>
+    </table>
+    <div class="add">
+        <a class="btn" href="/add-data">tambah barang</a>
+    </div>
 </body>
 
 </html>
