@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Apr 2022 pada 17.12
+-- Waktu pembuatan: 28 Apr 2022 pada 19.39
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 8.1.2
 
@@ -73,7 +73,7 @@ CREATE TABLE `pesanan` (
   `nama_brg` text NOT NULL,
   `harga` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
-  `total` int(11) NOT NULL
+  `total` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
