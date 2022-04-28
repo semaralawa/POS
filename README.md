@@ -1,5 +1,5 @@
 # Point Of Sale Website Server
-a simple server to handle POS
+a simple server to handle POS, part of MBKM SEAL project
 
 ## How to Use
 1. clone this repo
