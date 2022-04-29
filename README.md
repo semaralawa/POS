@@ -1,6 +1,10 @@
 # Point Of Sale Website Server
 a simple server to handle POS, part of MBKM SEAL project
 
+## Demo
+
+You could see how this server works on [this link](http://34.101.220.11) (as long as the server running)
+
 ## How to Use
 1. clone this repo
 2. make sure you already install node.js and npm
