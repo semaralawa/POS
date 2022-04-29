@@ -435,10 +435,6 @@
                 <div class="col-md-6">
                   <h6 class="mb-0">Total Pesanan</h6>
                 </div>
-                <div class="col-md-6 d-flex justify-content-start justify-content-md-end align-items-center">
-                  <i class="material-icons me-2 text-lg">date_range</i>
-                  <small>23 - 30 March 2020</small>
-                </div>
               </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -452,23 +448,40 @@
                         <h6 class="mb-1 text-dark text-sm">
                           <%= order.nama_brg %>
                         </h6>
-                        <span class="text-xs">Rp. <%= order.harga %></span>
-                        <span class="text-xs">x <%= order.qty %></span>
+                        <span class="text-xs">Rp. <%= order.harga %> x <%= order.qty %></span>
+                        <!-- <span class="text-xs"></span> -->
                       </div>
                     </div>
                     <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                      Rp. <%= order.total %>
+                      Rp. <%= (order.harga * order.qty).toFixed(0) %>
                     </div>
                     <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
                       <a href="/billing-delete/<%= order.nama_brg %>">Hapus</a>
                     </div>
+                    <div class="d-none align-items-center text-danger text-gradient text-sm font-weight-bold">
+                      <%= total_price=total_price + (order.harga * order.qty) %>
+                    </div>
                   </li>
                   <% }) %>
-                    <!-- <div class="d-flex align-items-center text-dark text-gradient text-md font-weight-bold">
-                      Total
-                    </div> -->
-                    <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
-                        class="material-icons text-sm">add</i>&nbsp;&nbsp;Buat Pesanan</a>
+                    <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2  border-radius-lg">
+                      <!-- list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg -->
+                      <div class="d-flex align-items-center text-dark text-gradient text-md font-weight-bold">
+                        Total
+                      </div>
+                      <div class="d-flex align-items-center text-success text-gradient text-md font-weight-bold">
+                        Rp. <%= total_price %>
+                      </div>
+                    </li>
+                    <form action="/billing-pay" method="post">
+                      <input class="d-none" type="text" name="total_harga" id="total_harga" value="<%= total_price %>">
+                      <div class="input-group input-group-outline my-3">
+                        <label class="form-label">Uang dibayarkan</label>
+                        <input type="text" class="form-control" name="bayar" id="bayar">
+                      </div>
+                      <button class="btn bg-gradient-dark mb-0 col-md-12" type="submit">bayar</button>
+                    </form>
+                    <!-- <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
+                        class="material-icons text-sm">add</i>&nbsp;&nbsp;Buat Pesanan</a> -->
               </ul>
               <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Menu Favorit Hari Ini</h6>
               <ul class="list-group">
@@ -512,20 +525,6 @@
                   </div>
                   <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
                     10 cup
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button
-                      class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i
-                        class="material-icons text-lg">priority_high</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Webflow</h6>
-                      <span class="text-xs">26 March 2020, at 05:00 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
-                    Pending
                   </div>
                 </li>
               </ul>

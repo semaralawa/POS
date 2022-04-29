@@ -125,7 +125,7 @@ app.get('/billing', function (req, res) {
     connection.query(
         'SELECT * FROM barang',
         (error, results) => {
-            res.render(path.join(__dirname, 'public/billing.ejs'), { items: results, orders: tot_pesanan });
+            res.render(path.join(__dirname, 'public/billing.ejs'), { items: results, orders: tot_pesanan, total_price: 0 });
         }
     );
 });
@@ -139,12 +139,6 @@ app.post('/billing-add', function (req, res) {
             console.log('add to pesanan successfull');
         }
     );
-    connection.query('UPDATE pesanan SET total=? WHERE nama_brg= ?', [data.qty * data.harga, data.nama_brg],
-        (error, results) => {
-            if (error) throw (error);
-            console.log('add to pesanan successfull');
-        }
-    );
     res.redirect('/billing');
 });
 
@@ -153,10 +147,23 @@ app.get('/billing-delete/:name', function (req, res) {
     connection.query(sql, [req.params.name],
         (error, results) => {
             if (error) throw (error);
-            console.log('delete successfull');
+            console.log('delete pesanan successfull');
         }
     );
     res.redirect('/billing');
 });
 
+app.post('/billing-pay', function (req, res) {
+    var data = req.body.bayar - req.body.total_harga;
+    connection.query("DELETE FROM pesanan",
+        (error, results) => {
+            if (error) throw (error);
+            console.log('delete pesanan successfull');
+        }
+    );
+    res.render(path.join(__dirname, 'public/payment.ejs'), { kembalian: data });
+});
+
 app.listen(80, '0.0.0.0');
+
+console.log("server started, visit http://localhost/");
